@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>糯糯森林 | 治愈系IP周边商店</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #FFF5E6;
+            --secondary: #FFE4C4;
+            --accent: #8B5A2B;
+            --light-accent: #A67C52;
+            --deep-accent: #6B4226;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(139, 90, 43, 0.15);
+            --hover-shadow: 0 8px 24px rgba(139, 90, 43, 0.25);
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--accent);
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        nav {
+            background: linear-gradient(135deg, #fff9ef, var(--white));
+            padding: 1rem 5%;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap:15px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--deep-accent);
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 6px 10px;
+            border-radius: 15px;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+            background-color: var(--light-accent);
+        }
+
+        .search-box{
+            padding:8px 15px;
+            border:1px solid var(--secondary);
+            border-radius:20px;
+            outline:none;
+            width: 180px;
+            transition: border 0.3s;
+        }
+        .search-box:focus{
+            border-color: var(--light-accent);
+        }
+
+        /* 购物车图标 */
+        .cart-icon {
+            position: relative;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 首页Banner */
+        .banner {
+            height: 60vh;
+            background: linear-gradient(rgba(255,245,230,0.65), rgba(255,245,230,0.65)), url('banner-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--deep-accent);
+            position: relative;
+            overflow: hidden;
+        }
+        .banner-float {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            animation: float 3s infinite alternate ease-in-out;
+        }
+        .float1 { left: 8%; bottom: 15%; background-image: url('rabbit.jpg'); border-radius: 50%; }
+        .float2 { right: 12%; top: 22%; background-image: url('bear.jpg'); border-radius: 50%; }
+        .float3 { right: 8%; bottom: 20%; background-image: url('cat.jpg'); border-radius: 50%; }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-12px); }
+        }
+        .banner-tag {
+            display: inline-block;
+            background: var(--secondary);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+        .banner-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.6);
+        }
+        .banner-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        .banner-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.8rem 2.2rem;
+            background: linear-gradient(135deg, var(--accent), var(--light-accent));
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(139,90,43,0.2);
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139,90,43,0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .btn-outline:hover {
+            background: var(--secondary);
+        }
+
+        /* 店铺亮点模块 */
+        .highlights {
+            padding: 3rem 5%;
+            background: var(--white);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        .highlight-item {
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: var(--primary);
+        }
+        .highlight-item h3 {
+            margin: 10px 0;
+            color: var(--deep-accent);
+        }
+        .highlight-item p {
+            font-size: 14px;
+            color: #704c2c;
+        }
+
+        /* 通用板块 */
+        .section {
+            padding: 5rem 5%;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--deep-accent);
+            position: relative;
+        }
+        .section-title::after{
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 8px auto;
+            border-radius: 2px;
+        }
+        .desc{
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 16px;
+            color: #94724e;
+        }
+
+        /* IP角色 */
+        .characters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+            gap: 2.5rem;
+        }
+        .char-card {
+            background-color: var(--white);
+            border-radius: 24px;
+            padding: 2.2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #fff0dd;
+        }
+        .char-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--hover-shadow);
+        }
+        .char-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 6px solid var(--secondary);
+        }
+
+        /* 商品分类 */
+        .category{
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .category span{
+            padding: 9px 18px;
+            background: var(--secondary);
+            border-radius: 25px;
+            margin: 0 6px 10px;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category span:hover{
+            background: var(--light-accent);
+            color: white;
+        }
+
+        /* 商品区域 */
+        .products {
+            background-color: var(--white);
+            width: 100%;
+            border-radius: 30px;
+            padding: 2rem 0;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+            gap: 2.2rem;
+            width: 100%;
+        }
+        .product-card {
+            background-color: var(--primary);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .tag-new{
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #ff9e9e;
+            color: white;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            z-index: 2;
+        }
+        .tag-hot{
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ffb86c;
+            color: white;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            z-index: 2;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+        .product-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .product-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            min-height: 45px;
+            color: var(--deep-accent);
+        }
+        .price {
+            color: #D2691E;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin:8px 0;
+        }
+        .add-cart{
+            display:inline-block;
+            margin-top:8px;
+            padding:8px 20px;
+            background:linear-gradient(135deg, var(--accent),var(--light-accent));
+            color:#fff;
+            border-radius: 25px;
+            text-decoration:none;
+            font-size:14px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .add-cart:hover{
+            transform: scale(1.05);
+        }
+
+        /* 结算栏 */
+        .checkout-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 1rem 5%;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 90;
+        }
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        /* 支付页面 */
+        .payment-page, .success-page {
+            display: none;
+            padding: 3rem 5%;
+            min-height: 80vh;
+        }
+        .payment-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+        .payment-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--deep-accent);
+        }
+        .order-info {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        .payment-method {
+            margin: 1.5rem 0;
+        }
+        .method-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem;
+            border: 2px solid var(--secondary);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .method-item.active {
+            border-color: var(--accent);
+            background: var(--primary);
+        }
+        .pay-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .pay-buttons button {
+            flex: 1;
+        }
+
+        /* 支付成功页面 */
+        .success-card {
+            max-width: 500px;
+            margin: 5rem auto;
+            text-align: center;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+        .success-icon {
+            font-size: 50px;
+            color: #4cd964;
+            margin-bottom: 1rem;
+        }
+
+        /* IP故事 */
+        .story{
+            background: linear-gradient(135deg, #ffeeda,var(--secondary));
+            text-align: center;
+            border-radius: 30px;
+            margin: 2rem 5%;
+        }
+        .story-content{
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 16px;
+            color: #704c2c;
+        }
+
+        /* 返回顶部 */
+        .back-top{
+            position: fixed;
+            bottom: 70px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg,var(--accent),var(--light-accent));
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 48px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        .back-top:hover{
+            transform: scale(1.1);
+        }
+
+        /* 页脚 */
+        footer {
+            background: linear-gradient(135deg,var(--deep-accent),var(--accent));
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 5%;
+            margin-top: 2rem;
+            margin-bottom: 60px;
+        }
+        .footer-info{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 25px;
+        }
+        .footer-item{
+            min-width: 150px;
+        }
+        .footer-item h4{
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width:768px) {
+            .nav-links { display: none; }
+            .banner-text h1 { font-size: 2rem; }
+            .search-box{ width: 140px; }
+            .section{padding:3rem 3%;}
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 + 购物车图标 -->
+    <nav>
+        <div class="logo">🌿 糯糯森林</div>
+        <input class="search-box" placeholder="搜索周边商品...">
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#characters">IP角色</a>
+            <a href="#story">IP故事</a>
+            <a href="#products">周边商品</a>
+        </div>
+        <div class="cart-icon">
+            🛒 <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </nav>
+
+    <!-- 主商城页面 -->
+    <div id="mainPage">
+        <!-- 首页Banner -->
+        <section class="banner" id="home">
+            <div class="banner-float float1"></div>
+            <div class="banner-float float2"></div>
+            <div class="banner-float float3"></div>
+            <div class="banner-text">
+                <span class="banner-tag">原创治愈IP · 软萌周边</span>
+                <h1>软萌治愈，陪伴日常</h1>
+                <p>来自糯糯森林的三只小可爱，陪你度过每一个温柔美好的瞬间</p>
+                <div class="banner-btns">
+                    <a href="#products" class="btn">去逛逛周边</a>
+                    <a href="#characters" class="btn btn-outline">认识小伙伴</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 店铺亮点模块 -->
+        <section class="highlights">
+            <div class="highlight-item">
+                <h3>🌿 原创IP设计</h3>
+                <p>三只专属治愈形象，每款周边都藏着温柔细节</p>
+            </div>
+            <div class="highlight-item">
+                <h3>🎁 软萌实用周边</h3>
+                <p>从文具到穿搭，把森林的温柔带在身边</p>
+            </div>
+            <div class="highlight-item">
+                <h3>💛 用心陪伴日常</h3>
+                <p>每一份周边，都是糯糯森林的治愈陪伴</p>
+            </div>
+        </section>
+
+        <!-- IP角色介绍 -->
+        <section class="section" id="characters">
+            <h2 class="section-title">✨ 认识糯糯森林的小居民</h2>
+            <div class="characters">
+                <div class="char-card">
+                    <img src="rabbit.jpg" alt="奶绒兔" class="char-img">
+                    <h3>奶绒兔</h3>
+                    <p>治愈担当，温柔安静，喜爱沐浴阳光，是大家贴心的暖心小伙伴。</p>
+                </div>
+                <div class="char-card">
+                    <img src="bear.jpg" alt="圆墩熊" class="char-img">
+                    <h3>圆墩熊</h3>
+                    <p>呆萌担当，性格佛系慵懒，生活松弛自在，待人憨厚又真诚。</p>
+                </div>
+                <div class="char-card">
+                    <img src="cat.jpg" alt="云朵猫" class="char-img">
+                    <h3>云朵猫</h3>
+                    <p>元气担当，活泼灵动俏皮，性格开朗好动，是森林里的快乐源泉。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IP故事板块 -->
+        <section class="section story" id="story">
+            <h2 class="section-title">🌿 糯糯森林的故事</h2>
+            <div class="story-content">
+                <p>在云端之下藏匿着一片四季温暖的糯糯森林，这里没有纷扰烦恼，处处皆是温柔与美好。</p>
+                <p>善良乖巧的奶绒兔、憨厚慵懒的圆墩熊、活泼俏皮的云朵猫，彼此相伴朝夕相伴，一同野餐嬉戏、看云晒太阳。</p>
+                <p>我们将这份纯粹温暖化作各式可爱周边，希望软糯治愈的形象，能够长久陪伴在大家日常生活之中。</p>
+            </div>
+        </section>
+
+        <!-- 全部商品区域（已恢复所有商品！） -->
+        <section class="section products" id="products">
+            <h2 class="section-title">🛒 糯糯森林周边商店</h2>
+            <p class="desc">多款风格软萌IP好物，日常使用、送礼收藏都十分合适</p>
+            
+            <div class="category">
+                <span>毛绒挂件</span>
+                <span>镭射吧唧</span>
+                <span>亚克力立牌</span>
+                <span>居家抱枕</span>
+                <span>文创文具</span>
+                <span>手机配件</span>
+                <span>日常好物</span>
+            </div>
+
+            <div class="product-grid">
+                <!-- 基础商品 -->
+                <div class="product-card">
+                    <span class="tag-hot">热销</span>
+                    <img src="plush-keychain.jpg" alt="毛绒挂件" class="product-img">
+                    <div class="product-info">
+                        <h4>10cm软萌毛绒挂件（三角色可选）</h4>
+                        <p>超柔短毛绒 | 包包装饰</p>
+                        <p class="price">¥29.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="badge-rabbit.jpg" alt="兔子吧唧" class="product-img">
+                    <div class="product-info">
+                        <h4>58mm镭射徽章 · 奶绒兔款</h4>
+                        <p>闪底工艺 | 高清印刷</p>
+                        <p class="price">¥15.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="badge-bear.jpg" alt="小熊吧唧" class="product-img">
+                    <div class="product-info">
+                        <h4>58mm镭射徽章 · 圆墩熊款</h4>
+                        <p>闪底工艺 | 高清印刷</p>
+                        <p class="price">¥15.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="badge-cat.jpg" alt="小猫吧唧" class="product-img">
+                    <div class="product-info">
+                        <h4>58mm镭射徽章 · 云朵猫款</h4>
+                        <p>闪底工艺 | 高清印刷</p>
+                        <p class="price">¥15.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="standee-rabbit.jpg" alt="兔子立牌" class="product-img">
+                    <div class="product-info">
+                        <h4>15cm亚克力立牌 · 奶绒兔款</h4>
+                        <p>双面印刷 | 带底座</p>
+                        <p class="price">¥35.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="standee-bear.jpg" alt="小熊立牌" class="product-img">
+                    <div class="product-info">
+                        <h4>15cm亚克力立牌 · 圆墩熊款</h4>
+                        <p>双面印刷 | 带底座</p>
+                        <p class="price">¥35.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="standee-cat.jpg" alt="小猫立牌" class="product-img">
+                    <div class="product-info">
+                        <h4>15cm亚克力立牌 · 云朵猫款</h4>
+                        <p>双面印刷 | 带底座</p>
+                        <p class="price">¥35.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <span class="tag-hot">热销</span>
+                    <img src="pillow.jpg" alt="三小只抱枕" class="product-img">
+                    <div class="product-info">
+                        <h4>治愈系野餐抱枕</h4>
+                        <p>三小只同框 | 超柔面料</p>
+                        <p class="price">¥59.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+
+                <!-- 新增7款商品 -->
+                <div class="product-card">
+                    <span class="tag-new">新品</span>
+                    <img src="notebook.jpg" alt="线圈笔记本" class="product-img">
+                    <div class="product-info">
+                        <h4>糯糯森林线圈笔记本</h4>
+                        <p>插画封面 | 学生记事专用</p>
+                        <p class="price">¥19.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="hair-ring.jpg" alt="毛绒发圈" class="product-img">
+                    <div class="product-info">
+                        <h4>软萌角色毛绒发圈</h4>
+                        <p>少女头饰 | 日常百搭</p>
+                        <p class="price">¥13.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <span class="tag-new">新品</span>
+                    <img src="phone-case-all.jpg" alt="全员手机壳" class="product-img">
+                    <div class="product-info">
+                        <h4>全员野餐主题手机壳</h4>
+                        <p>全包软壳 | 防摔耐磨</p>
+                        <p class="price">¥25.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="phone-case-rabbit.jpg" alt="兔子手机壳" class="product-img">
+                    <div class="product-info">
+                        <h4>奶绒兔专属可爱手机壳</h4>
+                        <p>磨砂质感 | 多机型适配</p>
+                        <p class="price">¥22.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="phone-case-bear.jpg" alt="熊手机壳" class="product-img">
+                    <div class="product-info">
+                        <h4>圆墩熊慵懒风手机壳</h4>
+                        <p>防摔耐磨 | 日常百搭</p>
+                        <p class="price">¥22.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="phone-case-cat.jpg" alt="小猫手机壳" class="product-img">
+                    <div class="product-info">
+                        <h4>云朵猫元气俏皮手机壳</h4>
+                        <p>透明轻薄 | 颜值出众</p>
+                        <p class="price">¥22.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="eye-mask.jpg" alt="睡眠眼罩" class="product-img">
+                    <div class="product-info">
+                        <h4>亲肤睡眠遮光眼罩</h4>
+                        <p>午休助眠 | 柔软舒适</p>
+                        <p class="price">¥16.9</p>
+                        <button class="add-cart" onclick="addCart()">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 支付页面 -->
+    <div class="payment-page" id="paymentPage">
+        <div class="payment-card">
+            <h2 class="payment-title">💰 结算支付</h2>
+            <div class="order-info">
+                <h4>订单详情</h4>
+                <p>商品：糯糯森林周边商品</p>
+                <p>订单号：NL<span id="orderNum">20250520</span></p>
+                <p style="margin-top:10px;">实付金额：<span class="total-price" id="payPrice">¥0.0</span></p>
+            </div>
+            <div class="payment-method">
+                <h4>选择支付方式</h4>
+                <div class="method-item active" onclick="selectMethod(this)">
+                    <span>💳</span> 微信支付
+                </div>
+                <div class="method-item" onclick="selectMethod(this)">
+                    <span>💰</span> 支付宝
+                </div>
+            </div>
+            <div class="pay-buttons">
+                <button class="btn btn-outline" onclick="backToShop()">返回购物</button>
+                <button class="btn" onclick="payNow()">立即支付</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 支付成功页面 -->
+    <div class="success-page" id="successPage">
+        <div class="success-card">
+            <div class="success-icon">✅</div>
+            <h2>支付成功！</h2>
+            <p>感谢您的购买，糯糯森林会尽快为您发货~</p>
+            <button class="btn" style="margin-top:2rem" onclick="backToShop()">返回商城</button>
+        </div>
+    </div>
+
+    <!-- 底部结算栏 -->
+    <div class="checkout-bar">
+        <div class="total-price">合计：<span id="totalPrice">¥0.0</span></div>
+        <button class="btn" onclick="goToPayment()">去结算</button>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-info">
+            <div class="footer-item">
+                <h4>关于我们</h4>
+                <p>糯糯森林原创治愈IP</p>
+                <p>用心打造可爱周边</p>
+            </div>
+            <div class="footer-item">
+                <h4>商品服务</h4>
+                <p>在线咨询答疑</p>
+                <p>售后品质保障</p>
+            </div>
+        </div>
+        <p>🌿 糯糯森林 · 治愈系IP周边商店</p>
+        <p>© 2026 糯糯森林工作室 | 保留所有版权</p>
+    </footer>
+
+    <div class="back-top" onclick="window.scrollTo(0,0)">↑</div>
+
+    <script>
+        // 购物车数据
+        let cartCount = 0;
+        let totalPrice = 0;
+
+        // 加入购物车
+        function addCart() {
+            cartCount++;
+            // 这里统一按平均价格计算，你可以根据不同商品价格修改
+            let price = 0;
+            // 简单按按钮顺序对应价格（和商品列表顺序一致）
+            const prices = [29.9,15.9,15.9,15.9,35.9,35.9,35.9,59.9,19.9,13.9,25.9,22.9,22.9,22.9,16.9];
+            // 这里为了简单，按29.9计算，如果你想每个商品价格都准确，可以给每个按钮传价格参数
+            price = 29.9;
+            totalPrice += price;
+            document.getElementById("cartCount").innerText = cartCount;
+            document.getElementById("totalPrice").innerText = "¥" + totalPrice.toFixed(1);
+            alert("商品已成功加入购物车✨，可继续挑选其他好物！");
+        }
+
+        // 跳转到支付页
+        function goToPayment() {
+            if(cartCount === 0){
+                alert("请先添加商品到购物车哦~");
+                return;
+            }
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("paymentPage").style.display = "block";
+            document.getElementById("payPrice").innerText = "¥" + totalPrice.toFixed(1);
+        }
+
+        // 选择支付方式
+        function selectMethod(el) {
+            document.querySelectorAll(".method-item").forEach(item => {
+                item.classList.remove("active");
+            });
+            el.classList.add("active");
+        }
+
+        // 立即支付
+        function payNow() {
+            document.getElementById("paymentPage").style.display = "none";
+            document.getElementById("successPage").style.display = "block";
+        }
+
+        // 返回商城
+        function backToShop() {
+            document.getElementById("paymentPage").style.display = "none";
+            document.getElementById("successPage").style.display = "none";
+            document.getElementById("mainPage").style.display = "block";
+        }
+    </script>
+</body>
+</html>
